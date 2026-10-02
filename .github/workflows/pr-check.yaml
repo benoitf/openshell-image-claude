@@ -24,25 +24,4 @@ on: [pull_request]
 
 jobs:
   build:
-    name: Build OCI image
-    runs-on: ubuntu-24.04
-
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
-      - name: Install qemu dependency
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y qemu-user-static
-
-      - name: Build image
-        id: build-image
-        uses: redhat-actions/buildah-build@719e3c40d8af9790c23eca13f7daa339f2867034 # v3.1.0
-        with:
-          image: openshell-image-claude
-          tags: next ${{ github.sha }}
-          platforms: linux/amd64, linux/arm64
-          containerfiles: |
-            ./Containerfile
-          context: .
-          oci: true
+    uses: openkaiden/gh-actions/.github/workflows/oci-image.yaml@1423c154f0c6b6b90b88137fdc9bfd07c00b67a4 # main
